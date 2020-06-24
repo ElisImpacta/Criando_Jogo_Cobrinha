@@ -14,8 +14,9 @@ let food = {
     x: Math.floor(Math.random() * 15 + 1) * box,
     y: Math.floor(Math.random() * 15 + 1) * box
 }
-//////////////Funções utilizadas
+let jogo = setInterval(iniciandoGame, 200);
 
+///////////////////////////////////Funções utilizas
 //Criando o corpo do joguinho / quadro
 function criandoBG(){
     context.fillStyle = "lightgreen";
@@ -25,7 +26,7 @@ function criandoBG(){
 //Criando a cobrinha
 function criandoSnake() {
     for (let index = 0; index < snake.length; index++) {
-        context.fillStyle = "black";
+        context.fillStyle = "blue";
         context.fillRect(snake[index].x, snake[index].y, box, box);
         
     }
@@ -33,7 +34,7 @@ function criandoSnake() {
 
 //Desenhando a comida e fazendo elas aparecerem
 function criandoFood(){
-    context.fillStyle = "blue"
+    context.fillStyle = "red"
     context.fillRect(food.x, food.y, box, box);
 }
 
@@ -49,12 +50,23 @@ function tecla(event){
 }
 
 //Função de inicializar e atualizar o jogo
-function iniciandoGame(){
+function iniciandoGame(start){
     //Se a cobrinha passar da parede, aparecerá do outro lado, o mesmo ocorre cima e baixo;
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
     if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
     if(snake[0].y > 15 * box && direction == "up") snake[0].y = 0;
     if(snake[0].y < 0 && direction == "down") snake[0].y = 16 * box;
+
+    //Se a cobra se chocar nela mesma, acaba o jogo
+    for (let index = 1; index < snake.length; index++) {
+        if(snake[0].x == snake[index].x && snake[0].y == snake[index].y){
+            clearInterval(jogo);
+            alert("Perdeu!! =(");
+        }
+    }
+
+    //Conforme a cobra come comida, ela fica mais rápida
+
 
     criandoBG();
     criandoSnake();
@@ -85,4 +97,5 @@ function iniciandoGame(){
     snake.unshift(novaCabeca);
 }
 
-let jogo = setInterval(iniciandoGame, 100);
+//document.getElementById("iniciar");
+//let jogo = setInterval(iniciandoGame, 200);
