@@ -9,7 +9,10 @@ snake[0] = {
 }
 //Iniciando a direção da cobrinha para a direita
 let direction = "right";
-
+let food = {
+    x: Math.floor(Math.random() * 15 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 1) * box
+}
 //////////////Funções utilizadas
 
 //Criando o corpo do joguinho / quadro
@@ -25,6 +28,12 @@ function criandoSnake() {
         context.fillRect(snake[index].x, snake[index].y, box, box);
         
     }
+}
+
+//Desenhando a comida e fazendo elas aparecerem
+function criandoFood(){
+    context.fillStyle = "pink"
+    context.fillRect(food.x, food.x, box, box);
 }
 
 //Chamando os botões do teclado
@@ -48,6 +57,7 @@ function iniciandoGame(){
 
     criandoBG();
     criandoSnake();
+    criandoFood();
     
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
