@@ -7,6 +7,7 @@ snake[0] = {
     x: 8 * box,
     y: 8 * box
 }
+//Iniciando a direção da cobrinha para a direita
 let direction = "right";
 
 //////////////Funções utilizadas
@@ -26,8 +27,25 @@ function criandoSnake() {
     }
 }
 
+//Chamando os botões do teclado
+document.addEventListener("keydown", tecla);
+
+//Criando o evento de tecla = Direita, esquerda, cima e baixo
+function tecla(event){
+    if(event.keyCode == 37 && direction != "right") direction = "left";
+    if(event.keyCode == 38 && direction != "up") direction = "down";
+    if(event.keyCode == 39 && direction != "left") direction = "right";
+    if(event.keyCode == 40 && direction != "down") direction = "up";
+}
+
 //Função de inicializar e atualizar o jogo
 function iniciandoGame(){
+//Se a cobrinha passar da parede, aparecerá do outro lado, o mesmo ocorre cima e baixo;
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direction == "up") snake[0].y = 0;
+    if(snake[0].y < 0 && direction == "down") snake[0].y = 16 * box;
+
     criandoBG();
     criandoSnake();
     
@@ -47,7 +65,6 @@ function iniciandoGame(){
     }
 
     snake.unshift(novaCabeca);
-
 }
 
 let jogo = setInterval(iniciandoGame, 100);
